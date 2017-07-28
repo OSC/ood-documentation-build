@@ -16,19 +16,19 @@ This image contains:
 ```sh
 git clone https://github.com/OSC/docker-sphinx.git
 cd docker-sphinx
-docker build --force-rm -t osc/docker-sphinx .
+docker build --force-rm -t ohiosupercomputer/docker-sphinx .
 ```
 
 ## Install
 
 ```sh
-docker pull osc/docker-sphinx
+docker pull ohiosupercomputer/docker-sphinx
 ```
 
 ## Usage
 
 ```sh
-docker run --rm -i -t -v "${PWD}:/doc" -u "$(id -u):$(id -g)" osc/docker-sphinx <cmd>
+docker run --rm -i -t -v "${PWD}:/doc" -u "$(id -u):$(id -g)" ohiosupercomputer/docker-sphinx <cmd>
 ```
 
 ### Docker Compose
@@ -40,7 +40,7 @@ example `docker-compose.yml` is seen as:
 version: "2"
 services:
   sphinx:
-    image: "osc/docker-sphinx"
+    image: "ohiosupercomputer/docker-sphinx"
     volumes:
       - "${PWD}:/doc"
     user: "1000:1000"
