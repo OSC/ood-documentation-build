@@ -29,8 +29,7 @@ RUN pip install --no-cache-dir \
       Sphinx \
       sphinx_rtd_theme \
       sphinxcontrib-plantuml \
-      sphinxcontrib-httpdomain \
-      sphinxcontrib-github_ribbon
+      sphinxcontrib-httpdomain
 
 # Stop Java from writing files in documentation source
 ENV _JAVA_OPTIONS -Duser.home=/tmp

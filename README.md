@@ -10,7 +10,6 @@ This image contains:
 - A variety of plugins:
   - [sphinxcontrib-plantuml](https://pypi.python.org/pypi/sphinxcontrib-plantuml)
   - [sphinxcontrib-httpdomain](https://pypi.python.org/pypi/sphinxcontrib-httpdomain)
-  - [sphinxcontrib-github_ribbon](https://pypi.python.org/pypi/sphinxcontrib-github_ribbon)
 
 ## Build
 
