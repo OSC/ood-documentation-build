@@ -25,7 +25,7 @@ RUN apk add --no-cache --virtual .ssl-deps \
     && apk del .ssl-deps
 
 # Install Sphinx and extras
-RUN pip install --no-cache-dir \
+RUN pip install --no-cache-dir --pre \
       Sphinx \
       sphinx_rtd_theme \
       sphinxcontrib-plantuml \
