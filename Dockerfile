@@ -7,8 +7,8 @@ ENV LANG en_US.UTF-8
 # Set up requirements
 RUN apk upgrade --update \
     && apk --no-cache add \
-          python \
-          py-pip \
+          python3 \
+          py3-pip \
           make \
           openjdk8-jre \
           ttf-dejavu \
@@ -18,18 +18,19 @@ RUN apk upgrade --update \
 RUN apk add --no-cache --virtual .ssl-deps \
       openssl \
       ca-certificates \
-    && mkdir /opt \
+    && mkdir -p /opt \
     && wget -O "/opt/plantuml.jar" "https://sourceforge.net/projects/plantuml/files/plantuml.jar" \
     && printf '#!/bin/sh -e\njava -jar /opt/plantuml.jar "$@"' > /usr/local/bin/plantuml \
     && chmod 755 /usr/local/bin/plantuml \
     && apk del .ssl-deps
 
 # Install Sphinx and extras
-RUN pip install --no-cache-dir --pre \
-      Sphinx \
-      sphinx_rtd_theme \
-      sphinxcontrib-plantuml \
-      sphinxcontrib-httpdomain
+ADD Pipfile* /tmp/
+
+RUN pip3 install pipenv=='2018.11.26' \
+  && cd /tmp \
+  && pipenv install --deploy --system \
+  && rm -rf /tmp/Pipfile*
 
 # Stop Java from writing files in documentation source
 ENV _JAVA_OPTIONS -Duser.home=/tmp
