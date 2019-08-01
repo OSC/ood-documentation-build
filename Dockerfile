@@ -22,8 +22,10 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
        npm \
        which \
        gcc-c++ make \
-       epel-release
-	
+       epel-release \
+    && yum clean all \
+    && rm -rf /var/cache/yum
+
 # Install PlantUML
 RUN mkdir -p /opt \
     && wget -O "/opt/plantuml.jar" "https://sourceforge.net/projects/plantuml/files/plantuml.jar" \
@@ -38,14 +40,19 @@ RUN yum install -y python36-pip.noarch \
     && pip3 install pipenv=='2018.11.26' \
     && cd /tmp \
     && pipenv install --deploy --system \ 
-    && rm -rf /tmp/Pipfile*
+    && rm -rf /tmp/Pipfile* \
+    && yum clean all \
+    && rm -rf /var/cache/yum
 
 # Install drawio-batch
 RUN git clone "https://github.com/languitar/drawio-batch.git" \
-    && cd drawio-batch && npm -g install && npm install  
+    && cd drawio-batch && npm -g install && npm install \
+    && yum clean all \
+    && rm -rf /var/cache/yum 
 
 # Stop Java from writing files in documentation source
 ENV _JAVA_OPTIONS -Duser.home=/tmp
 
 # Set working directory to documentation root
 WORKDIR /doc
+
