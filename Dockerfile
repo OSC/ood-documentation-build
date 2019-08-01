@@ -1,26 +1,29 @@
 FROM centos:7
 LABEL maintainer="OSC"
 
+# Set language to avoid bugs that sometimes appear
+ENV LANG en_US.UTF-8
+
 # Set up requirements
-RUN yum -y install \	   
-          make \
-          openjdk8-jre \
-          ttf-dejavu \
-          graphviz \
- 	  alsa-lib \
-	  gtk3 \
-	  libXScrnSaver \
-	  libappindicator \
- 	  libnotify \
-	  git \
-	  wget \
-	  openssl \
-          nodejs \
-          npm \
-          which \
- 	  gcc-c++ make \
-    && curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
-    && yum install -y  nodejs 
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
+    && yum -y install \	   
+       make \
+       openjdk8-jre \
+       ttf-dejavu \
+       graphviz \
+       alsa-lib \
+       gtk3 \
+       libXScrnSaver \
+       libappindicator \
+       libnotify \
+       git \
+       wget \
+       openssl \
+       nodejs \
+       npm \
+       which \
+       gcc-c++ make \
+       epel-release
 	
 # Install PlantUML
 RUN mkdir -p /opt \
@@ -31,8 +34,8 @@ RUN mkdir -p /opt \
 # Install Sphinx and extras
 ADD Pipfile* /tmp/
 
-RUN yum install -y epel-release && yum install -y  python36-pip.noarch \ 
-    && export LC_ALL=en_US.utf8 && export LANG=en_US.utf8 \  
+# Install pipenv
+RUN yum install -y python36-pip.noarch \
     && pip3 install pipenv=='2018.11.26' \
     && cd /tmp \
     && pipenv install --deploy --system \ 
@@ -40,7 +43,7 @@ RUN yum install -y epel-release && yum install -y  python36-pip.noarch \
 
 # Install drawio-batch
 RUN git clone "https://github.com/languitar/drawio-batch.git" \
-    && cd  drawio-batch && npm -g install && npm install  
+    && cd drawio-batch && npm -g install && npm install  
 
 # Stop Java from writing files in documentation source
 ENV _JAVA_OPTIONS -Duser.home=/tmp
