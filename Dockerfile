@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:latest
 LABEL maintainer="OSC"
 
 # Set language to avoid bugs that sometimes appear
@@ -7,7 +7,6 @@ ENV LANG en_US.UTF-8
 # Set up requirements
 RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
     && yum -y install \	   
-       make \
        openjdk8-jre \
        ttf-dejavu \
        graphviz \
