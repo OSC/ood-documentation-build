@@ -38,7 +38,7 @@ RUN yum install -y epel-release && yum install -y  python36-pip.noarch \
     && pipenv install --deploy --system \ 
     && rm -rf /tmp/Pipfile*
 
-# Install drawio-batch && build *.drawio files
+# Install drawio-batch
 RUN git clone "https://github.com/languitar/drawio-batch.git" \
     && cd  drawio-batch && npm -g install && npm install  
 
