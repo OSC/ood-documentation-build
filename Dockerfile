@@ -1,14 +1,14 @@
-FROM alpine:latest AS build-env
+FROM centos:7 AS build-env
 
 # Install PlantUML
-RUN apk add --no-cache --virtual .ssl-deps \
-    openssl \
-    ca-certificates \
+# Install PlantUML
+RUN yum install -y openssl.x86_64 \
+    ca-certificates.noarch \
     && mkdir -p /opt \
-    && wget -O "/opt/plantuml.jar" "https://sourceforge.net/projects/plantuml/files/plantuml.jar" \
+    && curl -o "/opt/plantuml.jar" -L "https://sourceforge.net/projects/plantuml/files/plantuml.jar" \
     && printf '#!/bin/sh -e\njava -jar /opt/plantuml.jar "$@"' > /usr/local/bin/plantuml \
-    && chmod 755 /usr/local/bin/plantuml \
-    && apk del .ssl-deps
+    && chmod 755 /usr/local/bin/plantuml
+
 
 FROM centos:7
 LABEL maintainer="OSC"
