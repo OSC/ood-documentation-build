@@ -1,0 +1,33 @@
+name: Publish Docker image
+
+on:
+  push:
+    tags: '*'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup the environment
+        run: |
+          TAG=${GITHUB_REF#refs/heads/}
+          REPO="docker.io/ohiosupercomputer"
+          echo "LATEST_IMG=$REPO/ood-doc-build:latest" >> $GITHUB_ENV
+          echo "VERSIONED_IMG=$REPO/ood-doc-build:$TAG" >> $GITHUB_ENV
+      - name: docker build and tag
+        run: | 
+          docker build -t $LATEST_IMG .
+          docker tag $LATEST_IMG $VERSIONED_IMG
+      - name: login to dockerhub
+        run: docker login -u oscrobot -p ${{ secrets.OSC_ROBOT_DOCKERHUB_TOKEN }}
+      - name: push images to dockerhub
+        run: |
+          docker push $LATEST_IMG
+          docker push $VERSIONED_IMG
