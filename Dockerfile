@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.9
 LABEL maintainer="OSC"
 
 # Set language to avoid bugs that sometimes appear
@@ -25,12 +25,11 @@ RUN apk add --no-cache --virtual .ssl-deps \
     && apk del .ssl-deps
 
 # Install Sphinx and extras
-ADD Pipfile* /tmp/
+ADD requirements.txt /tmp/
 
-RUN pip3 install pipenv=='2018.11.26' \
-  && cd /tmp \
-  && pipenv install --deploy --system \
-  && rm -rf /tmp/Pipfile*
+RUN python3 -m pip install wheel \
+  && python3 -m pip install -r /tmp/requirements.txt \
+  && rm -rf /tmp/requirements.txt
 
 # Stop Java from writing files in documentation source
 ENV _JAVA_OPTIONS -Duser.home=/tmp
