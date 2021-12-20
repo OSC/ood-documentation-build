@@ -12,7 +12,8 @@ RUN apk upgrade --update \
           make \
           openjdk8-jre \
           ttf-dejavu \
-          graphviz
+          graphviz \
+          ruby
 
 # Install PlantUML
 RUN apk add --no-cache --virtual .ssl-deps \
@@ -30,6 +31,10 @@ ADD requirements.txt /tmp/
 RUN python3 -m pip install wheel \
   && python3 -m pip install -r /tmp/requirements.txt \
   && rm -rf /tmp/requirements.txt
+
+# Add ruby gems we need to build
+RUN gem install \
+      rdoc rake --no-document
 
 # Stop Java from writing files in documentation source
 ENV _JAVA_OPTIONS -Duser.home=/tmp
