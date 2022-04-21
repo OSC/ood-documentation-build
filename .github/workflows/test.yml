@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+    branches: 
+      - master
+      - main
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build_image:
+    name: Build the imae
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup the environment
+      - name: docker build and tag
+        run: | 
+          docker build -t test .
