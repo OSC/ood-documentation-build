@@ -13,7 +13,7 @@ RUN apk upgrade --update \
           openjdk8-jre \
           ttf-dejavu \
           graphviz \
-          ruby
+          ruby ruby-dev yaml-dev g++ make
 
 # Install PlantUML
 RUN apk add --no-cache --virtual .ssl-deps \
