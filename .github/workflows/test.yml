@@ -13,10 +13,10 @@ defaults:
 
 jobs:
   build_image:
-    name: Build the imae
+    name: Build the image
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: docker build and tag
+      - name: docker build
         run: docker build -t test .
