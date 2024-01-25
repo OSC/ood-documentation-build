@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.17.2
 LABEL maintainer="OSC"
 
 # Set language to avoid bugs that sometimes appear

@@ -1,4 +1,4 @@
-sphinx==2.4.5
+sphinx==7.1.2
 sphinx-rtd-theme==0.4.3
 sphinxcontrib-plantuml==0.15
 sphinxcontrib-httpdomain==1.7.0
