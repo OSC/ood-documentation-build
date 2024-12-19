@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.20
 LABEL maintainer="OSC"
 
 # Set language to avoid bugs that sometimes appear
@@ -28,8 +28,8 @@ RUN apk add --no-cache --virtual .ssl-deps \
 # Install Sphinx and extras
 ADD requirements.txt /tmp/
 
-RUN python3 -m pip install wheel \
-  && python3 -m pip install -r /tmp/requirements.txt \
+RUN python3 -m pip install wheel --break-system-packages \
+  && python3 -m pip install -r /tmp/requirements.txt --break-system-packages \
   && rm -rf /tmp/requirements.txt
 
 # Add ruby gems we need to build
