@@ -13,7 +13,7 @@ RUN apk upgrade --update \
           openjdk8-jre \
           ttf-dejavu \
           graphviz \
-          ruby ruby-dev yaml-dev g++ make
+          ruby ruby-dev yaml-dev g++ make enchant2 aspell-en
 
 # Install PlantUML
 RUN apk add --no-cache --virtual .ssl-deps \
