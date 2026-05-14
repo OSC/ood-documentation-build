@@ -1,9 +1,7 @@
 FROM alpine:3.20
 LABEL maintainer="OSC"
-
 # Set language to avoid bugs that sometimes appear
 ENV LANG en_US.UTF-8
-
 # Set up requirements
 RUN apk upgrade --update \
     && apk --no-cache add \
@@ -13,8 +11,16 @@ RUN apk upgrade --update \
           openjdk8-jre \
           ttf-dejavu \
           graphviz \
-          ruby ruby-dev yaml-dev g++ make enchant2 aspell-en
-
+          ruby ruby-dev yaml-dev g++ make enchant2 aspell-en \
+          nodejs \
+          npm \
+          chromium \
+          chromium-chromedriver \
+          nss \
+          freetype \
+          harfbuzz \
+          ca-certificates \
+          font-noto-emoji
 # Install PlantUML
 RUN apk add --no-cache --virtual .ssl-deps \
       openssl \
@@ -35,6 +41,11 @@ RUN python3 -m pip install wheel --break-system-packages \
 # Add ruby gems we need to build
 RUN gem install \
       rdoc rake --no-document
+
+# Install pa11y
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+RUN npm install -g pa11y-ci
 
 # Stop Java from writing files in documentation source
 ENV _JAVA_OPTIONS -Duser.home=/tmp
