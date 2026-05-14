@@ -1,7 +1,9 @@
 FROM alpine:3.20
 LABEL maintainer="OSC"
+
 # Set language to avoid bugs that sometimes appear
 ENV LANG en_US.UTF-8
+
 # Set up requirements
 RUN apk upgrade --update \
     && apk --no-cache add \
